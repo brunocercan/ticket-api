@@ -1,4 +1,4 @@
-namespace CustomExceptions
+namespace TicketAPI.CustomExceptions
 {
     public abstract class BaseException : Exception
     {

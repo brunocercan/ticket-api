@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using DataTransferObjects;
+using TicketAPI.DataTransferObjects;
 
-namespace Data
+namespace TicketAPI.Data
 {
     public class AppDbContext : DbContext
     {

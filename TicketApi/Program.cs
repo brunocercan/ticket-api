@@ -1,7 +1,7 @@
-using BusinessLayer;
-using Data;
+using TicketAPI.BusinessLayer;
+using TicketAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using Middleware;
+using TicketAPI.Middleware;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

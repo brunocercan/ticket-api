@@ -1,4 +1,4 @@
-namespace Models.Tickets;
+namespace TicketAPI.Models.Tickets;
 
 public class ConsultaTicketsRequest
 {

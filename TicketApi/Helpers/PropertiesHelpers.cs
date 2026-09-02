@@ -1,4 +1,4 @@
-namespace Helpers;
+namespace TicketAPI.Helpers;
 
 public static class PropertiesHelper
 {

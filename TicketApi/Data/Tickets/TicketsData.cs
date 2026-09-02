@@ -1,4 +1,4 @@
-namespace Data.Tickets;
+namespace TicketAPI.Data.Tickets;
 
 using System.Threading.Tasks;
 using DataTransferObjects;

@@ -1,8 +1,8 @@
 using System.Net;
 using System.Text.Json;
-using CustomExceptions;
+using TicketAPI.CustomExceptions;
 
-namespace Middleware
+namespace TicketAPI.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

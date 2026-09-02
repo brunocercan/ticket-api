@@ -1,11 +1,11 @@
-using CustomExceptions;
-using Data;
-using Data.Tickets;
+using TicketAPI.CustomExceptions;
+using TicketAPI.Data;
+using TicketAPI.Data.Tickets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Models.Tickets;
+using TicketAPI.Models.Tickets;
 
-namespace BusinessLayer
+namespace TicketAPI.BusinessLayer
 {
     public class TicketsBL(AppDbContext context)
     {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using BusinessLayer;
-using Data;
-using Models.Tickets;
+using TicketAPI.BusinessLayer;
+using TicketAPI.Data;
+using TicketAPI.Models.Tickets;
 
 namespace TicketAPI.Controllers
 {
