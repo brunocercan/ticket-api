@@ -55,3 +55,10 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Env Dev and Env
+appsettings.Development.json
+appsettings.json
+
+# Non Used Files
+ticket-api.http
