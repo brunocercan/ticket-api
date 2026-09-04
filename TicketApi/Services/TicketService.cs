@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using TicketAPI.Models.Tickets;
 using TicketAPI.Interfaces;
 
-namespace TicketAPI.BusinessLayer
+namespace TicketAPI.Services
 {
     public class TicketService(ITicketRepository ticketRepository, ITicketQueryRepository ticketQueryRepository) : ITicketService
     {
