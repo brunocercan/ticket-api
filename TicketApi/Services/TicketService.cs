@@ -1,5 +1,4 @@
 using TicketAPI.CustomExceptions;
-using Microsoft.IdentityModel.Tokens;
 using TicketAPI.Models.Tickets;
 using TicketAPI.Interfaces;
 
@@ -13,7 +12,8 @@ namespace TicketAPI.Services
         public async Task<List<ConsultaTicketsResponse>> GetTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest)
         {
             var resultData = await _ticketRepository.GetTickets(consultaTicketsRequest);
-            if (resultData.IsNullOrEmpty())
+            
+            if (resultData.Count == 0)
             {
                 throw new NotFoundException();
             }
