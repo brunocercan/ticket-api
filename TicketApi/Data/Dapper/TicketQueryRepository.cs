@@ -30,7 +30,7 @@ namespace TicketAPI.Data.Dapper
                 t.ClosedAt as DataFechamento,
                 tc.Content as DetalheTicket
             FROM Tickets as t
-                INNER JOIN TicketComments tc ON tc.TicketId = t.Id
+                LEFT JOIN TicketComments tc ON tc.TicketId = t.Id
                 --Buscando Usuario
                 INNER JOIN Users as u on u.Id = t.RequesterId and u.Role = 'User'
                 --Buscando Responsavel pelo chamado 
