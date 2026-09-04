@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TicketAPI.BusinessLayer;
-using TicketAPI.Data;
+using TicketAPI.Interfaces;
 using TicketAPI.Models.Tickets;
 
 namespace TicketAPI.Controllers
@@ -10,21 +9,38 @@ namespace TicketAPI.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly TicketsBL _tickets;
-        
-        public TicketController(AppDbContext context)
-        {
-            _context = context;
-            _tickets = new TicketsBL(_context);
-        }
+        private readonly ITicketService _tickets;
 
+        public TicketController(ITicketService tickets)
+        {
+            _tickets = tickets;
+        }
+        
+        /// <summary>
+        /// Endpoint para consulta rápida dos tickets utilizando o EntityFramework
+        /// </summary>
+        /// <param name="consultaTicketsRequest"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("tickets")]
+        [ProducesResponseType(typeof(ConsultaTicketsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTickets([FromQuery] ConsultaTicketsRequest consultaTicketsRequest)
         {
             var result = await _tickets.GetTicketsAsync(consultaTicketsRequest);
-            return StatusCode(200, result);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Endpoint para consulta detalhada do ticket através de Query utilizando o Dapper
+        /// </summary>
+        /// <param name="consultaTicketsRequest"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("details")]
+        [ProducesResponseType(typeof(ConsultaDetalheTicketResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTicketsDetails([FromQuery] ConsultaTicketsRequest consultaTicketsRequest)
+        {
+            var result = await _tickets.GetDetalheTicketsAsync(consultaTicketsRequest);
+            return Ok(result);
         }
     }
 }

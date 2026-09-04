@@ -1,19 +1,16 @@
-namespace TicketAPI.Data.Tickets;
+namespace TicketAPI.Data.EntityFramework;
 
 using System.Threading.Tasks;
 using DataTransferObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Models.Tickets;
+using TicketAPI.Interfaces;
 using static Helpers.PropertiesHelper;
 
-public class TicketsData
+public class TicketRepository(AppDbContext context) : ITicketRepository
 {
-    private readonly AppDbContext _context;
-    public TicketsData(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly AppDbContext _context = context;
 
     public async Task<List<TicketsDto>> GetTickets(ConsultaTicketsRequest ticketsRequest)
     {
