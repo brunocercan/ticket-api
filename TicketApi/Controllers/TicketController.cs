@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TicketAPI.Interfaces;
+using TicketAPI.Models.TicketComments;
 using TicketAPI.Models.Tickets;
 
 namespace TicketAPI.Controllers
@@ -7,15 +8,10 @@ namespace TicketAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketController : ControllerBase
+    public class TicketController(ITicketService tickets) : ControllerBase
     {
-        private readonly ITicketService _tickets;
+        private readonly ITicketService _tickets = tickets;
 
-        public TicketController(ITicketService tickets)
-        {
-            _tickets = tickets;
-        }
-        
         /// <summary>
         /// Endpoint para consulta rápida dos tickets utilizando o EntityFramework
         /// </summary>
@@ -39,8 +35,17 @@ namespace TicketAPI.Controllers
         [ProducesResponseType(typeof(ConsultaDetalheTicketResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTicketsDetails([FromQuery] ConsultaTicketsRequest consultaTicketsRequest)
         {
-            var result = await _tickets.GetDetalheTicketsAsync(consultaTicketsRequest);
+            var result = await _tickets.GetDetailTicketsAsync(consultaTicketsRequest);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("comment")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostNewTicketComment([FromBody] CadastraComentarioTicket comentarioRequest)
+        {
+            await _tickets.PostNewTicketComment(comentarioRequest);
+            return StatusCode(201, "Comentario do ticket cadastrado com sucesso!");
         }
     }
 }

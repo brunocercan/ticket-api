@@ -14,8 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+//Instanciando Services
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+//Instanciando Repositories EF
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITicketCommentRepository, TicketCommentRepository>();
+
+//Instanciando Repositories Dapper
 builder.Services.AddScoped<ITicketQueryRepository, TicketQueryRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -27,6 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Conexão utilizada pelo Dapper
 builder.Services.AddScoped<IDbConnection>(_ => 
     new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 

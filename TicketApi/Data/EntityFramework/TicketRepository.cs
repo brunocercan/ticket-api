@@ -12,7 +12,7 @@ public class TicketRepository(AppDbContext context) : ITicketRepository
 {
     private readonly AppDbContext _context = context;
 
-    public async Task<List<TicketsDto>> GetTickets(ConsultaTicketsRequest ticketsRequest)
+    public async Task<List<TicketsDto>> GetTicketsAsync(ConsultaTicketsRequest ticketsRequest)
     {
         //Já verifica se todas as propriedades são null para retornar a lista total
         if (AreAllPropertiesNull(ticketsRequest))
@@ -46,5 +46,23 @@ public class TicketRepository(AppDbContext context) : ITicketRepository
         return await query.ToListAsync();
     }
 
+    public async Task UpdateTicketsAsync(int ticketId)
+    {
+        
+    }
 
+    public async Task DeleteTicketsAsync(int ticketId)
+    {
+        
+    }
+
+    public async Task CreateTicketAsync(CadastraTicketRequest request)
+    {
+        
+    }
+
+    public async Task<bool> TicketExists(int ticketId)
+    {
+        return await _context.Tickets.AnyAsync(t => t.Id == ticketId);
+    }
 }
