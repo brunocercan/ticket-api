@@ -7,6 +7,9 @@ namespace TicketAPI.Controllers
     [ApiController]
     public class UserController(IUserService userService) : ControllerBase
     {
+        /// <summary>
+        /// Endpoint para consultar usuários
+        /// </summary>
         private readonly IUserService _userService = userService;
         [HttpGet]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]

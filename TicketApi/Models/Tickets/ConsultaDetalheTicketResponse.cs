@@ -58,7 +58,31 @@ public class ConsultaDetalheTicketResponse
     /// </summary>
     public DateTime? DataFechamento { get; set; }
     /// <summary>
-    /// Descrição com maiores detalhes do ticket
+    /// Lista com maiores detalhes do ticket
     /// </summary>
-    public string DetalheTicket { get; set; } = "";
+    public List<DetalheTicket>? DetalhesTicket { get; set; }
+}
+
+public class DetalheTicket
+{
+    /// <summary>
+    /// Id do comentário
+    /// </summary>
+    public int IdComentario { get; set; }
+    /// <summary>
+    /// Id do Ticket
+    /// </summary>
+    public int IdTicket { get; set; }
+    /// <summary>
+    /// Id do usuário
+    /// </summary>
+    public int IdUsuario { get; set; }
+    /// <summary>
+    /// Conteúdo com o comentário do ticket
+    /// </summary>
+    public string Conteudo { get; set; } = "";
+    /// <summary>
+    /// Data de criação do comentário
+    /// </summary>
+    public DateTime DataCriacao { get; set; }
 }

@@ -39,6 +39,11 @@ namespace TicketAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Endpoint para adicionar comentário a ticket existente
+        /// </summary>
+        /// <param name="comentarioRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("comment")]
         [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
