@@ -52,5 +52,18 @@ namespace TicketAPI.Controllers
             await _tickets.PostNewTicketComment(comentarioRequest);
             return StatusCode(201, "Comentario do ticket cadastrado com sucesso!");
         }
+
+        /// <summary>
+        /// Endpoint para adicionar comentário a ticket existente
+        /// </summary>
+        /// <param name="cadastraTicketRequest"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostNewTicket([FromBody] CadastraTicketRequest cadastraTicketRequest)
+        {
+            await _tickets.PostNewTicket(cadastraTicketRequest);
+            return StatusCode(201, "Ticket cadastrado com sucesso!");
+        }
     }
 }

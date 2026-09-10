@@ -9,5 +9,5 @@ public interface ITicketRepository
     Task<bool> TicketExists(int ticketId);
     Task UpdateTicketsAsync(int ticketId);
     Task DeleteTicketsAsync(int ticketId);
-    Task CreateTicketAsync(CadastraTicketRequest request);
+    Task CreateTicketAsync(TicketsDto request);
 }

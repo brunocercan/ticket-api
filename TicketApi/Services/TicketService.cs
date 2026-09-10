@@ -66,6 +66,25 @@ namespace TicketAPI.Services
 
             await _ticketCommentRepository.CreateTicketCommentAsync(ticketCommentDto);
         }
+    
+        public async Task PostNewTicket(CadastraTicketRequest cadastraTicketRequest)
+        {
+            var ticketDto = new TicketsDto()
+            {
+                CreatedAt = DateTime.Now,
+                AssignedToId = cadastraTicketRequest.IdVinculado,
+                CategoryId = cadastraTicketRequest.IdCategoria,
+                ClosedAt = null,
+                UpdatedAt = null,
+                Description = cadastraTicketRequest.Descricao,
+                Priority = cadastraTicketRequest.Prioridade,
+                RequesterId = cadastraTicketRequest.IdSolicitante,
+                Status = cadastraTicketRequest.Status,
+                Title = cadastraTicketRequest.Titulo
+            };
+
+            await _ticketRepository.CreateTicketAsync(ticketDto);
+        }
     }
 
 }

@@ -56,9 +56,10 @@ public class TicketRepository(AppDbContext context) : ITicketRepository
         
     }
 
-    public async Task CreateTicketAsync(CadastraTicketRequest request)
+    public async Task CreateTicketAsync(TicketsDto request)
     {
-        
+        await _context.AddAsync(request);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> TicketExists(int ticketId)

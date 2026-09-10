@@ -38,7 +38,7 @@ namespace TicketAPI.Data.Dapper
                 tc.CreatedAt as DataCriacao -- O Dapper mapeará corretamente aqui por causa do splitOn
             FROM Tickets as t
                 LEFT JOIN TicketComments tc ON tc.TicketId = t.Id
-                INNER JOIN Users as u on u.Id = t.RequesterId and u.Role = 'User'
+                LEFT JOIN Users as u on u.Id = t.RequesterId and u.Role = 'User'
                 LEFT JOIN Users as r on r.Id = t.AssignedToId and r.Role = 'Support'
                 INNER JOIN Categories as c on c.Id = t.CategoryId
             WHERE 1=1");
