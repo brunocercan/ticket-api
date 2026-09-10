@@ -2,7 +2,6 @@ namespace TicketAPI.Models.Tickets
 {
     public class CadastraTicketRequest
     {
-        public int Id { get; set; }
         public string Titulo { get; set; } = "";
         public string Descricao { get; set; } = "";
         public string Prioridade { get; set; } = "";

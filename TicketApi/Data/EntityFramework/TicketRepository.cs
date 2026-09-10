@@ -46,14 +46,27 @@ public class TicketRepository(AppDbContext context) : ITicketRepository
         return await query.ToListAsync();
     }
 
-    public async Task UpdateTicketsAsync(int ticketId)
+    public async Task UpdateTicketsAsync(int ticketId, TicketsDto ticket)
     {
-        
+        //Verifica o objeto inteiro e se estiver modificado, é atualizado
+        _context.Entry(ticket).State = EntityState.Modified;
+
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteTicketsAsync(int ticketId)
     {
-        
+        //Removendo primeiramente tabela com chave utilizada pelo ticket
+        var tc = _context.TicketComments.Where(tc => tc.TicketId == ticketId);
+        _context.TicketComments.RemoveRange(tc);
+
+        await _context.SaveChangesAsync();
+
+        //Removendo ticket
+        var ticket = _context.Tickets.Where(t => t.Id == ticketId);
+        _context.Tickets.RemoveRange(ticket);
+
+        await _context.SaveChangesAsync();
     }
 
     public async Task CreateTicketAsync(TicketsDto request)

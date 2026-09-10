@@ -40,10 +40,12 @@ namespace TicketAPI.Services
                     DataFechamento = r.ClosedAt
             }).ToList();
         }
+
         public async Task<List<ConsultaDetalheTicketResponse>> GetDetailTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest)
         {
             return await _ticketQueryRepository.GetConsultaDetalheTicketResponsesAsync(consultaTicketsRequest) ?? throw new NotFoundException();
         }
+
         public async Task PostNewTicketComment(CadastraComentarioTicket comentarioRequest)
         {
             if(!await _ticketRepository.TicketExists(comentarioRequest.TicketId))
@@ -59,14 +61,14 @@ namespace TicketAPI.Services
             var ticketCommentDto = new TicketCommentsDto()
             {
                 Content = comentarioRequest.Content,
-                CreatedAt = comentarioRequest.CreatedAt,
+                CreatedAt = DateTime.Now,
                 TicketId = comentarioRequest.TicketId,
                 UserId = comentarioRequest.UserId
             };
 
             await _ticketCommentRepository.CreateTicketCommentAsync(ticketCommentDto);
-        }
-    
+        } 
+
         public async Task PostNewTicket(CadastraTicketRequest cadastraTicketRequest)
         {
             var ticketDto = new TicketsDto()
@@ -84,6 +86,41 @@ namespace TicketAPI.Services
             };
 
             await _ticketRepository.CreateTicketAsync(ticketDto);
+        }
+
+        public async Task DeleteTicket(int id)
+        {
+            if (!await _ticketRepository.TicketExists(id))
+            {
+                throw new NotFoundException($"Ticket Id {id}");
+            }
+
+            await _ticketRepository.DeleteTicketsAsync(id);
+        }
+
+        public async Task AtualizaTicket(AtualizaTicketRequest request)
+        {
+            if (!await _ticketRepository.TicketExists(request.Id))
+            {
+                throw new NotFoundException($"Ticket Id {request.Id}");
+            }
+
+            var ticket = new TicketsDto()
+            {
+                Id = request.Id,
+                AssignedToId = request.IdVinculado,
+                CategoryId = request.IdCategoria,
+                ClosedAt = request.DataFechamento,
+                UpdatedAt = DateTime.Now,
+                CreatedAt = request.DataCriacao,
+                Description = request.Descricao,
+                Priority = request.Prioridade,
+                RequesterId = request.IdSolicitante,
+                Status = request.Status,
+                Title = request.Titulo
+            };
+
+            await _ticketRepository.UpdateTicketsAsync(request.Id, ticket);
         }
     }
 

@@ -7,7 +7,7 @@ public interface ITicketRepository
 {
     Task<List<TicketsDto>> GetTicketsAsync(ConsultaTicketsRequest ticketsRequest);
     Task<bool> TicketExists(int ticketId);
-    Task UpdateTicketsAsync(int ticketId);
     Task DeleteTicketsAsync(int ticketId);
     Task CreateTicketAsync(TicketsDto request);
+    Task UpdateTicketsAsync(int ticketId, TicketsDto ticket);
 }

@@ -54,7 +54,7 @@ namespace TicketAPI.Controllers
         }
 
         /// <summary>
-        /// Endpoint para adicionar comentário a ticket existente
+        /// Endpoint para adicionar ticket existente
         /// </summary>
         /// <param name="cadastraTicketRequest"></param>
         /// <returns></returns>
@@ -65,5 +65,39 @@ namespace TicketAPI.Controllers
             await _tickets.PostNewTicket(cadastraTicketRequest);
             return StatusCode(201, "Ticket cadastrado com sucesso!");
         }
+
+        /// <summary>
+        /// Endpoint para deletar ticket
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("/{id}")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteTicket([FromRoute] int id)
+        {
+            await _tickets.DeleteTicket(id);
+            return StatusCode(204, "Ticket deletado com sucesso!");
+        }
+
+        /// <summary>
+        /// Endpoint para atualizar todas as propriedades do ticket
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("/{id}")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateTicket([FromRoute] int id, [FromBody] AtualizaTicketRequest request)
+        {
+            if (id != request.Id)
+            {
+                return BadRequest();
+            }
+
+            await _tickets.AtualizaTicket(request);
+            return StatusCode(204, "Ticket atualizado com sucesso!");
+        }
+        
     }
 }

@@ -28,8 +28,16 @@ namespace TicketAPI.Middleware
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            // 1. Verifica se a resposta já começou a ser enviada ao cliente
+            if (context.Response.HasStarted)
+            {
+                // Se já começou, não podemos mudar Headers/StatusCode. 
+                // Apenas registramos o erro no log e interrompemos o fluxo.
+                return;
+            }
+
             context.Response.ContentType = "application/json";
 
             int statusCode = (int)HttpStatusCode.InternalServerError;
@@ -53,7 +61,9 @@ namespace TicketAPI.Middleware
             };
 
             var json = JsonSerializer.Serialize(response);
-            return context.Response.WriteAsync(json);
+            
+            // 2. Usamos await diretamente aqui para garantir a escrita assíncrona correta
+            await context.Response.WriteAsync(json);
         }
     }
 }

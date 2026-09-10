@@ -8,4 +8,6 @@ public interface ITicketService
     Task<List<ConsultaDetalheTicketResponse>> GetDetailTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest);
     Task PostNewTicketComment(CadastraComentarioTicket comentarioRequest);
     Task PostNewTicket(CadastraTicketRequest cadastraTicketRequest);
+    Task DeleteTicket(int id);
+    Task AtualizaTicket(AtualizaTicketRequest request);
 }
