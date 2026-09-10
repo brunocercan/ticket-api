@@ -10,4 +10,5 @@ public interface ITicketService
     Task PostNewTicket(CadastraTicketRequest cadastraTicketRequest);
     Task DeleteTicket(int id);
     Task AtualizaTicket(AtualizaTicketRequest request);
+    Task<ConsultaTicketsResponse> GetSingleTicketAsync(int id);
 }

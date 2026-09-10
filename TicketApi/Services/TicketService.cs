@@ -111,7 +111,7 @@ namespace TicketAPI.Services
                 AssignedToId = request.IdVinculado,
                 CategoryId = request.IdCategoria,
                 ClosedAt = request.DataFechamento,
-                UpdatedAt = DateTime.Now,
+                UpdatedAt = request.DataAlteracao,
                 CreatedAt = request.DataCriacao,
                 Description = request.Descricao,
                 Priority = request.Prioridade,
@@ -121,6 +121,31 @@ namespace TicketAPI.Services
             };
 
             await _ticketRepository.UpdateTicketsAsync(request.Id, ticket);
+        }
+
+        public async Task<ConsultaTicketsResponse> GetSingleTicketAsync(int id)
+        {
+            if (!await _ticketRepository.TicketExists(id))
+            {
+                throw new NotFoundException($"Ticket Id {id}");
+            }
+
+            var ticket = await _ticketRepository.GetSingleTicketAsync(id);
+
+            return new ConsultaTicketsResponse()
+            {
+                DataAtualizacao = ticket.UpdatedAt,
+                DataCriacao = ticket.CreatedAt,
+                DataFechamento = ticket.ClosedAt,
+                Descricao = ticket.Description,
+                Id = ticket.Id,
+                IdCategoria = ticket.CategoryId,
+                IdSolicitante = ticket.RequesterId,
+                IdVinculado = ticket.AssignedToId,
+                Prioridade = ticket.Priority,
+                Status = ticket.Status,
+                Titulo = ticket.Title
+            };
         }
     }
 

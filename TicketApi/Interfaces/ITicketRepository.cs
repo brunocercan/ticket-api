@@ -10,4 +10,5 @@ public interface ITicketRepository
     Task DeleteTicketsAsync(int ticketId);
     Task CreateTicketAsync(TicketsDto request);
     Task UpdateTicketsAsync(int ticketId, TicketsDto ticket);
+    Task<TicketsDto> GetSingleTicketAsync(int ticketId);
 }

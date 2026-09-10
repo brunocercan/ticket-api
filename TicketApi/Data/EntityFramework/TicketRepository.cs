@@ -79,4 +79,9 @@ public class TicketRepository(AppDbContext context) : ITicketRepository
     {
         return await _context.Tickets.AnyAsync(t => t.Id == ticketId);
     }
+
+    public async Task<TicketsDto> GetSingleTicketAsync(int ticketId)
+    {
+        return _context.Tickets.Where(t => t.Id == ticketId).Single();
+    }
 }

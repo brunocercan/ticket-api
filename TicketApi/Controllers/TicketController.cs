@@ -26,6 +26,20 @@ namespace TicketAPI.Controllers
         }
 
         /// <summary>
+        /// Busca unico ticket
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/{id}")]
+        [ProducesResponseType(typeof(ConsultaTicketsResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSingleTicket([FromRoute] int id)
+        {
+            var result = await _tickets.GetSingleTicketAsync(id);
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Endpoint para consulta detalhada do ticket através de Query utilizando o Dapper
         /// </summary>
         /// <param name="consultaTicketsRequest"></param>
