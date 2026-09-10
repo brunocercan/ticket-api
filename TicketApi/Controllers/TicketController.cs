@@ -77,7 +77,7 @@ namespace TicketAPI.Controllers
         public async Task<IActionResult> DeleteTicket([FromRoute] int id)
         {
             await _tickets.DeleteTicket(id);
-            return StatusCode(204, "Ticket deletado com sucesso!");
+            return NoContent();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace TicketAPI.Controllers
             }
 
             await _tickets.AtualizaTicket(request);
-            return StatusCode(204, "Ticket atualizado com sucesso!");
+            return NoContent();
         }
         
     }
