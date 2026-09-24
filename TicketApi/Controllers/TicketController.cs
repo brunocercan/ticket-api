@@ -86,7 +86,7 @@ namespace TicketAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("/{id}")]
+        [Route("{id}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteTicket([FromRoute] int id)
         {
@@ -100,7 +100,7 @@ namespace TicketAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("/{id}")]
+        [Route("{id}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateTicket([FromRoute] int id, [FromBody] AtualizaTicketRequest request)
         {
