@@ -6,7 +6,7 @@ using TicketAPI.Models.Tickets;
 namespace TicketAPI.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/tickets")]
     [ApiController]
     public class TicketController(ITicketService tickets) : ControllerBase
     {
@@ -31,7 +31,7 @@ namespace TicketAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("/{id}")]
+        [Route("{id}")]
         [ProducesResponseType(typeof(ConsultaTicketsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSingleTicket([FromRoute] int id)
         {

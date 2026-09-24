@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TicketAPI.DataTransferObjects;
 using TicketAPI.Interfaces;
 
 namespace TicketAPI.Data.EntityFramework
@@ -11,5 +12,16 @@ namespace TicketAPI.Data.EntityFramework
         {
             return await _context.Users.AnyAsync(u => u.Id == userId);
         }
+
+        public async Task<UsersDto> GetUserByIdAsync(int userId)
+        {
+            return _context.Users.Where(u => u.Id == userId).Single();
+        }
+
+        public async Task<List<UsersDto>> GetUserListAsync()
+        {
+            return _context.Users.ToList();
+        }
     }
+
 }
