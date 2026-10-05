@@ -115,14 +115,7 @@ ScriptsDB/
 
 #### Arquivos de configuração
 
-O projeto utiliza arquivos `appsettings.json` para configuração. **NUNCA commite arquivos com senhas reais!**
-
-| Arquivo | Descrição | Commitado? |
-|---------|-----------|------------|
-| `appsettings.Example.json` | Template com placeholders | ✅ Sim |
-| `appsettings.json` | Configuração local (ignorado pelo git) | ❌ Não |
-| `appsettings.Development.json` | Configuração de desenvolvimento (ignorado) | ❌ Não |
-| `appsettings.Production.json` | Configuração de produção (ignorado) | ❌ Não |
+O projeto utiliza arquivos `appsettings.json` para configuração.
 
 #### Passos para configurar:
 
@@ -162,13 +155,6 @@ O projeto utiliza arquivos `appsettings.json` para configuração. **NUNCA commi
    ```
 
 ### 2. Frontend (Angular)
-
-#### Arquivos de ambiente
-
-| Arquivo | Descrição | Commitado? |
-|---------|-----------|------------|
-| `src/environments/environment.ts` | Desenvolvimento | ✅ Sim |
-| `src/environments/environment.prod.ts` | Produção | ✅ Sim |
 
 #### Configuração:
 
@@ -315,18 +301,6 @@ docker run -p 8080:8080 -p 8081:8081 \
   -e JwtSettings__SecretKey="SUA_CHAVE_SECRETA_32_CHARS!" \
   ticket-api
 ```
-
-## 🔐 Segurança - Checklist
-
-- [ ] **NUNCA** commite `appsettings.json`, `appsettings.Development.json`, `appsettings.Production.json`
-- [ ] **NUNCA** commita arquivos `.env` com senhas reais
-- [ ] **NUNCA** commita `login.json` ou arquivos de credenciais
-- [ ] Use **User Secrets** (`dotnet user-secrets`) para desenvolvimento local
-- [ ] Use **Azure Key Vault**, **AWS Secrets Manager** ou **HashiCorp Vault** em produção
-- [ ] Gere chaves JWT fortes (mínimo 32 caracteres, aleatórias)
-- [ ] Use senhas fortes para o SQL Server (mínimo 8 chars, complexidade)
-- [ ] Configure `TrustServerCertificate=True` apenas para desenvolvimento
-- [ ] Em produção, use certificados SSL válidos e `TrustServerCertificate=False`
 
 ## 🧪 Testes
 
