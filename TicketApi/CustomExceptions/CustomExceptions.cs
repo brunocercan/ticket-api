@@ -20,4 +20,13 @@ namespace TicketAPI.CustomExceptions
         public CannotCreateException(string mensagem) 
             : base(mensagem, 400) {} 
     }
+
+    public class ValidationException : BaseException
+    {
+        public ValidationException(string message) 
+            : base(message, 400) {}
+        
+        public ValidationException(IEnumerable<string> errors) 
+            : base(string.Join("; ", errors), 400) {}
+    }
 }

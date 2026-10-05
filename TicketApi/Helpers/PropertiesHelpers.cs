@@ -10,4 +10,9 @@ public static class PropertiesHelper
             .GetProperties()
             .All(p => p.GetValue(obj) == null);
     }
+
+    public static bool IsNullOrEmpty(this string? value)
+    {
+        return string.IsNullOrEmpty(value);
+    }
 }

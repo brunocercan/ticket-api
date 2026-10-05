@@ -1,9 +1,9 @@
 using System.Data;
 using System.Text;
 using Dapper;
-using Microsoft.IdentityModel.Tokens;
 using TicketAPI.Interfaces;
 using TicketAPI.Models.Tickets;
+using TicketAPI.Helpers;
 
 namespace TicketAPI.Data.Dapper
 {
@@ -65,6 +65,12 @@ namespace TicketAPI.Data.Dapper
             {
                 parameters.Add("Title", request.Titulo);
                 query.AppendLine("AND t.Title = @Title");
+            }
+
+            if (request.IdSolicitante.HasValue)
+            {
+                parameters.Add("IdSolicitante", request.IdSolicitante);
+                query.AppendLine("AND t.RequesterId = @IdSolicitante");
             }
 
             var ticketDic = new Dictionary<int, ConsultaDetalheTicketResponse>();

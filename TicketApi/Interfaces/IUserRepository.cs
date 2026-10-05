@@ -1,4 +1,5 @@
 using TicketAPI.DataTransferObjects;
+using TicketAPI.Helpers;
 
 namespace TicketAPI.Interfaces
 {
@@ -6,6 +7,10 @@ namespace TicketAPI.Interfaces
     {
         Task<bool> UserExists(int userId);
         Task<UsersDto> GetUserByIdAsync(int userId);
-        Task<List<UsersDto>> GetUserListAsync();
+        Task<PagedList<UsersDto>> GetUserListAsync(int pageNumber, int pageSize);
+        Task<UsersDto?> GetUserByEmailAsync(string email);
+        Task CreateUserAsync(UsersDto user);
+        Task UpdateUserAsync(int userId, UsersDto user);
+        Task DeleteUserAsync(int userId);
     }
 }

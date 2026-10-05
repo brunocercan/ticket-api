@@ -3,29 +3,33 @@ using TicketAPI.Models.Tickets;
 using TicketAPI.Interfaces;
 using TicketAPI.Models.TicketComments;
 using TicketAPI.DataTransferObjects;
+using TicketAPI.Helpers;
+using FluentValidation;
+using CustomValidationException = TicketAPI.CustomExceptions.ValidationException;
 
 namespace TicketAPI.Services
 {
     public class TicketService(ITicketRepository ticketRepository, 
         ITicketQueryRepository ticketQueryRepository, 
         ITicketCommentRepository ticketCommentRepository,
-        IUserRepository userRepository) : ITicketService
+        IUserRepository userRepository,
+        IValidator<CadastraTicketRequest> cadastraTicketValidator,
+        IValidator<AtualizaTicketRequest> atualizaTicketValidator,
+        IValidator<CadastraComentarioTicket> cadastraComentarioValidator) : ITicketService
     {
         private readonly ITicketRepository _ticketRepository = ticketRepository;
         private readonly ITicketQueryRepository _ticketQueryRepository = ticketQueryRepository;
         private readonly ITicketCommentRepository _ticketCommentRepository = ticketCommentRepository;
         private readonly IUserRepository _userRepository = userRepository;
+        private readonly IValidator<CadastraTicketRequest> _cadastraTicketValidator = cadastraTicketValidator;
+        private readonly IValidator<AtualizaTicketRequest> _atualizaTicketValidator = atualizaTicketValidator;
+        private readonly IValidator<CadastraComentarioTicket> _cadastraComentarioValidator = cadastraComentarioValidator;
 
-        public async Task<List<ConsultaTicketsResponse>> GetTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest)
+        public async Task<PagedResponse<ConsultaTicketsResponse>> GetTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest)
         {
             var resultData = await _ticketRepository.GetTicketsAsync(consultaTicketsRequest);
-            
-            if (resultData.Count == 0)
-            {
-                throw new NotFoundException();
-            }
 
-            return resultData.Select(r => new ConsultaTicketsResponse()
+            var response = resultData.Select(r => new ConsultaTicketsResponse()
             {
                     Id = r.Id,
                     Titulo = r.Title,
@@ -39,6 +43,15 @@ namespace TicketAPI.Services
                     DataAtualizacao = r.UpdatedAt,
                     DataFechamento = r.ClosedAt
             }).ToList();
+
+            return new PagedResponse<ConsultaTicketsResponse>
+            {
+                Data = response,
+                CurrentPage = resultData.CurrentPage,
+                TotalPages = resultData.TotalPages,
+                PageSize = resultData.PageSize,
+                TotalCount = resultData.TotalCount
+            };
         }
 
         public async Task<List<ConsultaDetalheTicketResponse>> GetDetailTicketsAsync(ConsultaTicketsRequest consultaTicketsRequest)
@@ -48,6 +61,12 @@ namespace TicketAPI.Services
 
         public async Task PostNewTicketComment(CadastraComentarioTicket comentarioRequest)
         {
+            var validationResult = await _cadastraComentarioValidator.ValidateAsync(comentarioRequest);
+            if (!validationResult.IsValid)
+            {
+                throw new CustomValidationException(validationResult.Errors.Select(e => e.ErrorMessage));
+            }
+
             if(!await _ticketRepository.TicketExists(comentarioRequest.TicketId))
             {
                 throw new NotFoundException($"Ticket Id {comentarioRequest.TicketId}");
@@ -71,6 +90,12 @@ namespace TicketAPI.Services
 
         public async Task PostNewTicket(CadastraTicketRequest cadastraTicketRequest)
         {
+            var validationResult = await _cadastraTicketValidator.ValidateAsync(cadastraTicketRequest);
+            if (!validationResult.IsValid)
+            {
+                throw new CustomValidationException(validationResult.Errors.Select(e => e.ErrorMessage));
+            }
+
             var ticketDto = new TicketsDto()
             {
                 CreatedAt = DateTime.Now,
@@ -100,6 +125,12 @@ namespace TicketAPI.Services
 
         public async Task AtualizaTicket(AtualizaTicketRequest request)
         {
+            var validationResult = await _atualizaTicketValidator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                throw new CustomValidationException(validationResult.Errors.Select(e => e.ErrorMessage));
+            }
+
             if (!await _ticketRepository.TicketExists(request.Id))
             {
                 throw new NotFoundException($"Ticket Id {request.Id}");

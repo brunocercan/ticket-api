@@ -1,0 +1,32 @@
+# Ignore build artifacts
+bin/
+obj/
+
+# Ignore test results
+TestResults/
+
+# Ignore user secrets
+*.usersecrets
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Rider settings
+.idea/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+
+# Ignore local configuration
+appsettings.Development.json
+appsettings.Local.json
+
+# Ignore node_modules (if any frontend)
+**/node_modules/
+
+# Ignore Docker files
+docker-compose.override.yml
