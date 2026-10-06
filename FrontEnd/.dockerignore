@@ -1,0 +1,30 @@
+# Ignore build artifacts
+dist/
+node_modules/
+
+# Ignore local configuration
+*.log
+npm-debug.log*
+
+# Ignore IDE settings
+.vscode/
+.idea/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Docker files
+Dockerfile
+docker-compose*.yml
+nginx.conf
+
+# Ignore git
+.git/
+.gitignore
+
+# Ignore source maps
+*.map
+
+# Ignore test files
+*.spec.ts

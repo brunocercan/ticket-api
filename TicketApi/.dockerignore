@@ -28,5 +28,8 @@ appsettings.Local.json
 # Ignore node_modules (if any frontend)
 **/node_modules/
 
+# Ignore FrontEnd directory (separate Docker build)
+FrontEnd/
+
 # Ignore Docker files
 docker-compose.override.yml

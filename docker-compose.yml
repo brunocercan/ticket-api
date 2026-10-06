@@ -29,7 +29,7 @@ services:
       - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TicketApiDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=HelpDeskDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
       - JwtSettings__SecretKey=${JWT_SECRET_KEY}
       - JwtSettings__Issuer=TicketApi
       - JwtSettings__Audience=TicketApiUsers
@@ -37,8 +37,18 @@ services:
     depends_on:
       sqlserver:
         condition: service_healthy
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/appuser/.microsoft/usersecrets:ro
+
+  frontend:
+    build:
+      context: .
+      dockerfile: FrontEnd/Dockerfile
+    container_name: ticket-frontend
+    ports:
+      - "4200:80"
+    environment:
+      - API_URL=http://localhost:8080
+    depends_on:
+      - api
 
 volumes:
   sqlserver_data:
